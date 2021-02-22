@@ -1,11 +1,12 @@
 import * as React from 'react';
+import { graphql, ChildMutateProps } from '@apollo/react-hoc';
 import AuthenticationContext from './AuthenticationContext';
 
-interface ContainerProps {
+interface Props {
   children: React.ReactNode;
 }
 
-export class AuthenticationContainer extends React.PureComponent<ContainerProps> {
+export class AuthenticationContainer extends React.PureComponent<Props> {
   render() {
     const { children } = this.props;
     const loading = false;
