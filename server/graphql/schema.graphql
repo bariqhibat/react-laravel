@@ -10,6 +10,9 @@ type Query {
     user(id: ID @eq): User @find
 
     books: [Book!] @all
+    categories: [Category!] @all
+
+    someComplexQuery(search: String!): [Book!]
 }
 
 type User {
