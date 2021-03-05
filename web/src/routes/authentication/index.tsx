@@ -1,31 +1,75 @@
-import * as React from 'react';
-import { gql } from '@apollo/client';
-import { graphql, ChildMutateProps } from '@apollo/react-hoc';
+import React, { FunctionComponent, Dispatch, SetStateAction } from 'react';
+import { Card } from 'antd';
 import { AuthenticationContainer } from './AuthenticationContainer';
-import { Login } from './components/LoginView';
 
-const booksQuery = gql`
-  {
-    books {
-      id
-      title
-    }
-  }
-`;
-class C extends React.PureComponent {
-  onFinish = async (val: any) => {
-    console.log({ val });
-    return null!;
-  };
+import { SignUpForm } from './components/SignUpForm';
+import { LoginForm } from './components/LoginForm';
 
-  render() {
-    console.log(this.props);
-    return (
-      <AuthenticationContainer>
-        <Login submit={this.onFinish} />
-      </AuthenticationContainer>
-    );
-  }
-}
+type Props = {
+  setLoggedIn: Dispatch<SetStateAction<boolean>>;
+  jestMock?: (arg0: string) => void;
+};
 
-export const Authentication = graphql(booksQuery)(C);
+export const Login: FunctionComponent<Props> = ({
+  setLoggedIn,
+  jestMock,
+}: Props) => {
+  if (jestMock) jestMock('login rendered!');
+  return (
+    <AuthenticationContainer setLoggedIn={setLoggedIn}>
+      <div
+        style={{
+          paddingTop: '2rem',
+          display: 'flex',
+          justifyContent: 'center',
+        }}
+      >
+        <Card
+          style={{
+            width: '85%',
+            maxWidth: '500px',
+            height: 'fit-content',
+            padding: '2rem',
+            border: '1px solid white',
+          }}
+        >
+          <LoginForm />
+        </Card>
+      </div>
+    </AuthenticationContainer>
+  );
+};
+
+Login.defaultProps = {
+  jestMock: () => console.log(),
+};
+
+export const SignUp: FunctionComponent<Props> = ({
+  setLoggedIn,
+  jestMock,
+}: Props) => {
+  if (jestMock) jestMock('signUp rendered!');
+  return (
+    <AuthenticationContainer setLoggedIn={setLoggedIn}>
+      <div
+        style={{
+          paddingTop: '2rem',
+          display: 'flex',
+          justifyContent: 'center',
+        }}
+      >
+        <Card
+          style={{
+            width: '85%',
+            maxWidth: '500px',
+            height: 'fit-content',
+            padding: '2rem',
+            border: '1px solid white',
+          }}
+        >
+          <SignUpForm />
+        </Card>
+      </div>
+    </AuthenticationContainer>
+  );
+};

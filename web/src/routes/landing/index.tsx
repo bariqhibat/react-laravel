@@ -1,7 +1,16 @@
-import * as React from 'react';
+import { Col, Row } from 'antd';
+import React, { FunctionComponent } from 'react';
 
-export class Landing extends React.PureComponent {
-  render() {
-    return <div>Landings</div>;
-  }
-}
+export const Landing: FunctionComponent = () => {
+  return (
+    <div>
+      <Row>
+        <Col span={12}>
+          <h1>Freelance.SG</h1>
+        </Col>
+
+        <Col span={12}>Behold the freelance.SG</Col>
+      </Row>
+    </div>
+  );
+};
