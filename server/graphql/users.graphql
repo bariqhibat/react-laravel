@@ -1,0 +1,34 @@
+type User implements Model {
+    id: ID!
+    firstName: String!
+    lastName: String!
+    email: String!
+    password: String!
+}
+
+type USR_Singular_Response implements Response {
+    ok: Boolean!
+    errors: [Error!]
+    code: Number!
+    user: User
+}
+type USR_Multiple_Response implements Response {
+    ok: Boolean!
+    errors: [Error!]
+    code: Number!
+    users: [User!]
+}
+
+type Query {
+    getUserById(id: String!): USR_Singular_Response!
+}
+
+type Mutation {
+    createUser(
+        email: String!
+        password: String!
+        firstName: String!
+        lastName: String!
+    ): USR_Singular_Response!
+    signIn(email: String!, password: String!): USR_Singular_Response!
+}

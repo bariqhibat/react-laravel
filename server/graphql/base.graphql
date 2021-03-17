@@ -1,0 +1,14 @@
+type Error {
+    path: String!
+    message: String!
+}
+
+interface Model {
+    id: ID!
+}
+
+interface Response {
+    ok: Boolean!
+    errors: [Error!]
+    code: Number!
+}
