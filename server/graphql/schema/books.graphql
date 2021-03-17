@@ -41,7 +41,5 @@ extend type Mutation {
         link: String!
         featured: Boolean!
         category: String!
-    ): BK_Singular_Response!
+    ): Book! @create
 }
-
-#import base.graphql

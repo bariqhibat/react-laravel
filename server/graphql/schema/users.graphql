@@ -1,10 +1,6 @@
-directive @bcrypt on ARGUMENT_DEFINITION | INPUT_FIELD_DEFINITION
-
-type User {
-    id: ID!
+extend type User {
     firstName: String!
     lastName: String!
-    email: String!
     password: String!
     created_at: DateTime!
     updated_at: DateTime!
@@ -35,5 +31,3 @@ extend type Mutation {
         lastName: String! @trim
     ): User @create
 }
-
-#import base.graphql
