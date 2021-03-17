@@ -1,51 +1,49 @@
 import React, { ContextType, FunctionComponent, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { Form, Input, Button, message } from 'antd';
-import AuthenticationContext from '../AuthenticationContext';
+import { useAuthenticationContext } from '../AuthenticationController';
 
 export const SignUpForm: FunctionComponent = () => {
-  //   const { login, history, fetchMe, setLoggedIn } = useContext(
-  //     AuthenticationContext,
-  //   );
+  const { login, history, fetchMe, setLoggedIn } = useAuthenticationContext();
 
-  //   const onFinish = async (val) => {
-  //     try {
-  //       const response = await login({
+  // const onFinish = async (val) => {
+  //   try {
+  //     const response = await login({
+  //       variables: {
+  //         email: val.email,
+  //         password: val.password,
+  //       },
+  //     });
+
+  //     if (response?.data?.login?.ok) {
+  //       await fetchMe({
   //         variables: {
-  //           email: val.email,
-  //           password: val.password,
+  //           userUUID: response?.data.login.user._id,
   //         },
   //       });
+  //       setLoggedIn(true);
+  //       const { token, refreshToken } = response?.data?.login;
+  //       // set tokens
+  //       localStorage.setItem('token', token);
+  //       localStorage.setItem('refreshToken', refreshToken);
 
-  //       if (response?.data?.login?.ok) {
-  //         await fetchMe({
-  //           variables: {
-  //             userUUID: response?.data.login.user._id,
-  //           },
-  //         });
-  //         setLoggedIn(true);
-  //         const { token, refreshToken } = response?.data?.login;
-  //         // set tokens
-  //         localStorage.setItem('token', token);
-  //         localStorage.setItem('refreshToken', refreshToken);
-
-  //         history.push({
-  //           pathname: '/myRecipe',
-  //           state: {
-  //             justLogin: true,
-  //           },
-  //         });
-  //         return null;
-  //       }
-  //       response?.data?.login?.errors.map((e) => message.error(e.message));
-
+  //       history.push({
+  //         pathname: '/myRecipe',
+  //         state: {
+  //           justLogin: true,
+  //         },
+  //       });
   //       return null;
-  //     } catch (err) {
-  //       message.error('Login failed!');
   //     }
+  //     response?.data?.login?.errors.map((e) => message.error(e.message));
 
   //     return null;
-  //   };
+  //   } catch (err) {
+  //     message.error('Login failed!');
+  //   }
+
+  //   return null;
+  // };
 
   return (
     <div

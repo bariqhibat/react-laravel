@@ -138,3 +138,5 @@ web-build/
 
 # dev env
 .env.development
+
+./web/.env

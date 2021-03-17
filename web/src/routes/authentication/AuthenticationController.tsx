@@ -1,17 +1,27 @@
-import React, { FunctionComponent, Dispatch, SetStateAction } from 'react';
+import React, {
+  FunctionComponent,
+  Dispatch,
+  SetStateAction,
+  useContext,
+} from 'react';
 import { withRouter, Redirect, RouteComponentProps } from 'react-router-dom';
-import { useMutation, useLazyQuery } from '@apollo/client';
+import { useMutation } from '@apollo/client';
 // import { EMAIL_SIGNUP, EMAIL_LOGIN, ME_QUERY } from "../../graphql/Users";
 
-import AuthenticationContext from './AuthenticationContext';
+import { EMAIL_LOGIN, EMAIL_SIGNUP } from '../../graphql/users';
 
 type ContainerProps = RouteComponentProps & {
   setLoggedIn: Dispatch<SetStateAction<boolean>>;
 };
 
-type AuthenticationType = ContainerProps & {
+type AuthenticationContextType = ContainerProps & {
   loading: boolean;
+  history: RouteComponentProps;
+  createUser: any;
+  login: any;
 };
+
+const AuthenticationContext = React.createContext({});
 
 const Container: FunctionComponent<ContainerProps> = ({
   history,
@@ -29,14 +39,14 @@ const Container: FunctionComponent<ContainerProps> = ({
   // Run queries
 
   // GQL mutations
-  // const [
-  //   createUser,
-  //   { loading: createUserLoading, error: createUserError },
-  // ] = useMutation(EMAIL_SIGNUP);
+  const [
+    createUser,
+    { loading: createUserLoading, error: createUserError },
+  ] = useMutation(EMAIL_SIGNUP);
 
-  // const [login, { loading: loginLoading, error: loginError }] = useMutation(
-  //   EMAIL_LOGIN,
-  // );
+  const [login, { loading: loginLoading, error: loginError }] = useMutation(
+    EMAIL_LOGIN,
+  );
 
   // const [
   //   fetchMe,
@@ -48,11 +58,10 @@ const Container: FunctionComponent<ContainerProps> = ({
   // ] = useLazyQuery(ME_QUERY);
 
   try {
-    loading = false;
-    // loading = createUserLoading || loginLoading || meQueryLoading;
+    loading = createUserLoading || loginLoading;
 
     // Error view
-    error = null;
+    error = createUserError || loginError;
 
     if (error) {
       throw error;
@@ -69,9 +78,9 @@ const Container: FunctionComponent<ContainerProps> = ({
             // Data from server
             // fetchMe,
             // Mutation
-            // createUser,
-            // login,
-          } as AuthenticationType
+            createUser,
+            login,
+          } as AuthenticationContextType
         }
       >
         {children}
@@ -90,4 +99,11 @@ const Container: FunctionComponent<ContainerProps> = ({
   }
 };
 
-export const AuthenticationContainer = withRouter(Container);
+export const useAuthenticationContext = () => {
+  const context: AuthenticationContextType | any = useContext(
+    AuthenticationContext,
+  );
+  return context;
+};
+
+export const AuthenticationController = withRouter(Container);

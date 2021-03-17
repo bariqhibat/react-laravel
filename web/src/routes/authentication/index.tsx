@@ -1,6 +1,6 @@
 import React, { FunctionComponent, Dispatch, SetStateAction } from 'react';
 import { Card } from 'antd';
-import { AuthenticationContainer } from './AuthenticationContainer';
+import { AuthenticationController } from './AuthenticationController';
 
 import { SignUpForm } from './components/SignUpForm';
 import { LoginForm } from './components/LoginForm';
@@ -16,7 +16,7 @@ export const Login: FunctionComponent<Props> = ({
 }: Props) => {
   if (jestMock) jestMock('login rendered!');
   return (
-    <AuthenticationContainer setLoggedIn={setLoggedIn}>
+    <AuthenticationController setLoggedIn={setLoggedIn}>
       <div
         style={{
           paddingTop: '2rem',
@@ -36,7 +36,7 @@ export const Login: FunctionComponent<Props> = ({
           <LoginForm />
         </Card>
       </div>
-    </AuthenticationContainer>
+    </AuthenticationController>
   );
 };
 
@@ -50,7 +50,7 @@ export const SignUp: FunctionComponent<Props> = ({
 }: Props) => {
   if (jestMock) jestMock('signUp rendered!');
   return (
-    <AuthenticationContainer setLoggedIn={setLoggedIn}>
+    <AuthenticationController setLoggedIn={setLoggedIn}>
       <div
         style={{
           paddingTop: '2rem',
@@ -70,6 +70,6 @@ export const SignUp: FunctionComponent<Props> = ({
           <SignUpForm />
         </Card>
       </div>
-    </AuthenticationContainer>
+    </AuthenticationController>
   );
 };
