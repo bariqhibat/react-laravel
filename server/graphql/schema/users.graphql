@@ -1,0 +1,39 @@
+directive @bcrypt on ARGUMENT_DEFINITION | INPUT_FIELD_DEFINITION
+
+type User {
+    id: ID!
+    firstName: String!
+    lastName: String!
+    email: String!
+    password: String!
+    created_at: DateTime!
+    updated_at: DateTime!
+}
+
+type USR_Singular_Response {
+    ok: Boolean!
+    errors: [Error!]
+    user: User
+}
+
+type USR_Multiple_Response {
+    ok: Boolean!
+    errors: [Error!]
+    users: [User!]
+}
+
+extend type Query {
+    getUserById(id: ID! @eq): User @find
+    getAllUsers: [User!] @all
+}
+
+extend type Mutation {
+    createUser(
+        email: String! @trim @rules(apply: ["email", "unique:users"])
+        password: String! @hash @rules(apply: ["min:6"])
+        firstName: String! @trim
+        lastName: String! @trim
+    ): User @create
+}
+
+#import base.graphql

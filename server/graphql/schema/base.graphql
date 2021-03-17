@@ -10,5 +10,4 @@ interface Model {
 interface Response {
     ok: Boolean!
     errors: [Error!]
-    code: Number!
 }

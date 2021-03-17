@@ -1,0 +1,47 @@
+type Book implements Model {
+    id: ID!
+    title: String!
+    author: String!
+    image: String
+    description: String
+    link: String
+    featured: Boolean
+    category: Category! @belongsTo
+}
+
+type Category implements Model {
+    id: ID!
+    name: String!
+    books: [Book] @hasMany
+}
+
+type BK_Singular_Response implements Response {
+    ok: Boolean!
+    errors: [Error!]
+    book: Book
+}
+type BK_Multiple_Response implements Response {
+    ok: Boolean!
+    errors: [Error!]
+    books: [Book!]
+}
+
+extend type Query {
+    getAllBooks: [Book!] @all
+    getBookById(id: ID! @eq): Book @find
+    getAllCategories: [Category!] @all
+}
+
+extend type Mutation {
+    createBook(
+        title: String!
+        author: String!
+        image: String
+        description: String
+        link: String!
+        featured: Boolean!
+        category: String!
+    ): BK_Singular_Response!
+}
+
+#import base.graphql
