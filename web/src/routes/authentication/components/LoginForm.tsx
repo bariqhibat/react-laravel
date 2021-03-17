@@ -25,22 +25,29 @@ export const LoginForm: React.FunctionComponent = () => {
 
   const onFinish = async (val: FormValues) => {
     try {
+      console.log({ val });
       const response = await login({
         variables: {
-          email: val.email,
-          password: val.password,
+          input: {
+            username: val.email,
+            password: val.password,
+          },
         },
       });
 
-      if (response?.data?.login?.ok) {
+      console.log({ response });
+      if (response?.data?.login) {
         setLoggedIn(true);
-        const { token, refreshToken } = response?.data?.login;
+        const {
+          access_token: token,
+          refresh_token: refreshToken,
+        } = response?.data?.login;
         // set tokens
         localStorage.setItem('token', token);
         localStorage.setItem('refreshToken', refreshToken);
 
         history.push({
-          pathname: '/myRecipe',
+          pathname: '/',
           state: {
             justLogin: true,
           },
@@ -74,11 +81,11 @@ export const LoginForm: React.FunctionComponent = () => {
           <Formik
             initialValues={initialValues}
             validationSchema={LoginSchema}
-            onSubmit={(
+            onSubmit={async (
               values: FormValues,
               { setSubmitting }: FormikHelpers<FormValues>,
             ) => {
-              onFinish(values);
+              await onFinish(values);
               setSubmitting(false);
             }}
           >
@@ -104,16 +111,6 @@ export const LoginForm: React.FunctionComponent = () => {
                   labelAlign="left"
                   validateStatus={touched.email && errors.email ? 'error' : ''}
                   help={touched.email && errors.email ? errors.email : ''}
-                  // rules={[
-                  //   {
-                  //     required: true,
-                  //     message: 'Please input your email!',
-                  //   },
-                  //   {
-                  //     type: 'email',
-                  //     message: 'Wrong email format',
-                  //   },
-                  // ]}
                 >
                   <Input
                     value={values.email}
@@ -139,12 +136,6 @@ export const LoginForm: React.FunctionComponent = () => {
                   help={
                     touched.password && errors.password ? errors.password : ''
                   }
-                  // rules={[
-                  //   {
-                  //     required: true,
-                  //     message: 'Please input your password!',
-                  //   },
-                  // ]}
                 >
                   <Input.Password
                     placeholder="Password"

@@ -7,12 +7,13 @@ export const EMAIL_SIGNUP = gql`
     $firstName: String!
     $lastName: String!
   ) {
-    ok
-    errors {
-      path
-      message
-    }
-    user {
+    createUser(
+      email: $email
+      password: $password
+      firstName: $firstName
+      lastName: $lastName
+    ) {
+      id
       email
       firstName
       lastName
@@ -21,13 +22,16 @@ export const EMAIL_SIGNUP = gql`
 `;
 
 export const EMAIL_LOGIN = gql`
-  mutation EMAIL_LOGIN($email: String!, $password: String!) {
-    ok
-    errors {
-      path
-      message
+  mutation EMAIL_LOGIN($input: LoginInput) {
+    login(input: $input) {
+      access_token
+      refresh_token
+      expires_in
+      token_type
+      user {
+        id
+        email
+      }
     }
-    refreshToken
-    token
   }
 `;
