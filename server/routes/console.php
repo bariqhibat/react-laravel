@@ -17,3 +17,12 @@ use Illuminate\Support\Facades\Artisan;
 Artisan::command('inspire', function () {
     $this->comment(Inspiring::quote());
 })->purpose('Display an inspiring quote');
+
+Artisan::command('user', function () {
+    App\Models\User::create([
+        'firstName' => 'Bariq',
+        'lastName' => 'Hibatullah',
+        'email' => 'myemail@email.com',
+        'password' => bcrypt('123456789qq')
+    ]);
+})->describe('Create sample user');

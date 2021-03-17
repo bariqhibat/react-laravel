@@ -9,4 +9,6 @@ type Query
 
 type Mutation
 
-#import schema/*.graphql
+#import schema/base.graphql
+#import schema/books.graphql
+#import schema/users.graphql
